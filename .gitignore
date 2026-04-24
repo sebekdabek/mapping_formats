@@ -1,0 +1,20 @@
+# Generated output files
+*.csv
+*.json
+*.yaml
+*.xlsx
+ 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+.venv-1/ 
+venv/
+env/
+ 
+# OS
+.DS_Store
+Thumbs.db
+ 
