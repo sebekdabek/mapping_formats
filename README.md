@@ -17,7 +17,7 @@ mapping_exec/
 ### Output files (generated on run)
 
 ```
-mapping_exec/
+outputs/
 ├── data_mapping.xlsx
 ├── data_mapping.csv
 ├── data_mapping.json
@@ -109,7 +109,7 @@ Array of objects, one record per mapping row. Indented for readability.
 ```
 
 ### YAML
-Human-readable list of mapping records. Useful for version-controlled config files or pipeline definitions.
+List of mapping records. Useful for version-controlled config files or pipeline definitions.
 
 ```yaml
 - Source Entity: CRM_Customers
@@ -144,3 +144,18 @@ Re-run the script to regenerate all four output files.
 | `ModuleNotFoundError: No module named 'openpyxl'` | Run `python -m pip install -r requirements.txt` |
 | `ModuleNotFoundError: No module named 'yaml'` | Run `python -m pip install pyyaml` |
 | `OSError: Read-only file system` | Ensure the script's directory is writable |
+
+
+## Next commits
+|extension|desc|
+|---|---|
+|CLI Arguments| output directory, filename prefix, or which formats to export are all hardcoded. A simple argparse setup would make it much more flexible. |
+|input mode| the data is hardcoded in DATA. There's no way to feed it a CSV or Excel file as input and convert that, which is likely the real-world use case. |
+|logging| the script only prints "Done" at the end. There's no feedback on which file was written, where, or how many rows were processed. |
+|row validation| nothing checks that each row has exactly 6 columns before writing, so malformed data would silently produce broken output files. |
+|output path bug| os.path.dirname(os.path.abspath(__file__)) |
+|import guards| No if __name__ == "__main__" guard for imports — import os is inside the main block rather than at the top with the other imports. |
+|error handling!| If a file is open in Excel and the script tries to overwrite it, it crashes with no useful message. |
+|overwrite protection/timestamping| No overwrite protection / timestamping — re-running silently overwrites previous exports with no warning.|
+
+
